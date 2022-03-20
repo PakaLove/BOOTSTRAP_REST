@@ -37,11 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public void updateUser(User user) {
-        if (user.getPassword().equals(getUserById(user.getId()).getPassword())) {
-            user.setPassword(getUserById(user.getId()).getPassword());
-        } else {
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        }
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -49,7 +45,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public User getUserByUsername(String username){return userRepository.findByusername(username); }
+    public User getUserByUsername(String username){
+        User user = userRepository.findByusername(username);
+        return user;
+    }
 
     @Override
     public UserDetails loadUserByUsername (String s) throws UsernameNotFoundException{
