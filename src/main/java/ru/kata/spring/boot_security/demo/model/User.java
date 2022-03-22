@@ -13,15 +13,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "username")
     private String username;
-    @Column(name = "lastname")
     private String lastname;
-    @Column(name = "email")
     private String email;
-    @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     public User(long id, String username, String lastname, String email, String password, Set<Role> roles) {
@@ -56,6 +53,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
@@ -112,7 +110,12 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                "roles=" + roles +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 
