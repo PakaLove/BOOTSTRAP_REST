@@ -190,29 +190,34 @@
                         }
                         roles[i] = {id: id, name: $('#addroles').val()[i]};
                     }
-                    var user = {
-                        id: $('#editid').val(),
-                        username: $('#editu').val(),
-                        password: $('#editp').val(),
-                        lastname: $('#editl').val(),
-                        email: $('#editemail').val(),
-                        roles: roles
-                    }
-                    $.ajax({
-                        url: 'http://localhost:8080/api/admin/users',
-                        type: 'PUT',
-                        accept: 'application/json',
-                        contentType: 'application/json',
-                        data: JSON.stringify(user),
-                        success: function (res) {
-                            update();
-                            $('#close').click();
-                        },
-                        error: function (e) {
-
-
+                    if (roles.length === 0) {
+                        tr.push('<div class="alert alert-danger" role="alert">\n' +
+                            'Не заполнена роль пользователя!\n' +
+                            '</div>')
+                        $('#newuserform').append($(tr.join('')));
+                    } else {
+                        var user = {
+                            id: $('#editid').val(),
+                            username: $('#editu').val(),
+                            password: $('#editp').val(),
+                            lastname: $('#editl').val(),
+                            email: $('#editemail').val(),
+                            roles: roles
                         }
-                    })
+                        $.ajax({
+                            url: 'http://localhost:8080/api/admin/users',
+                            type: 'PUT',
+                            accept: 'application/json',
+                            contentType: 'application/json',
+                            data: JSON.stringify(user),
+                            success: function (res) {
+                                update();
+                                $('#close').click();
+                            },
+                            error: function (e) {
+                            }
+                        })
+                    }
                 })
             });
         })
